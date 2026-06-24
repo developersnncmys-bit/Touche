@@ -54,22 +54,30 @@ export default function Navigation() {
     };
   }, []);
 
-  // Dark-section detection: when any [data-nav-dark] element is intersecting
-  // the navbar's vertical band, switch the bar to light text on dark.
+  // Dark-section detection: when any [data-nav-dark] element overlaps the
+  // navbar's vertical band, switch the bar to light text on dark.
+  // Re-queries targets on every check so sections that mount later (e.g.
+  // dynamic / pinned content) are picked up reliably.
   useEffect(() => {
     const NAV_BAND_HEIGHT = 100; // approximate navbar zone from top
-    const targets = Array.from(
-      document.querySelectorAll<HTMLElement>("[data-nav-dark]")
-    );
-    if (targets.length === 0) return;
 
     const check = () => {
-      const isDark = targets.some((el) => {
+      const targets = document.querySelectorAll<HTMLElement>("[data-nav-dark]");
+      if (targets.length === 0) {
+        setDarkMode(false);
+        return;
+      }
+      let isDark = false;
+      targets.forEach((el) => {
+        if (isDark) return;
         const r = el.getBoundingClientRect();
-        return r.top <= NAV_BAND_HEIGHT && r.bottom >= 0;
+        if (r.top <= NAV_BAND_HEIGHT && r.bottom >= 0) {
+          isDark = true;
+        }
       });
       setDarkMode(isDark);
     };
+
     check();
     window.addEventListener("scroll", check, { passive: true });
     window.addEventListener("resize", check);

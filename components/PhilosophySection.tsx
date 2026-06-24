@@ -19,7 +19,7 @@ type StoryToken =
 // Big hero statement — mirrors HEAVN's "Light [IMG] that feels like sun."
 const HERO_HEADLINE: StoryToken[] = [
   { kind: "word", text: "Interiors" },
-  { kind: "img", src: "/images/residential.png", alt: "A Touché interior" },
+  { kind: "img", src: "/images/philosophy.png", alt: "A Touché interior" },
   { kind: "word", text: "that" },
   { kind: "word", text: "feel" },
   { kind: "word", text: "like" },
@@ -531,7 +531,7 @@ export default function PhilosophySection() {
         >
           <div className="relative w-full h-full">
             <Image
-              src="/images/residential.png"
+              src="/images/philosophy.png"
               alt="A Touché interior"
               fill
               sizes="100vw"

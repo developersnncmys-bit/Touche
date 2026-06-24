@@ -20,8 +20,7 @@ export const projects: Project[] = [
     category: "Residential",
     year: 2025,
     location: "Indiranagar, Bangalore",
-    image:
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=80",
+    image: "/featured/img1.png",
     description:
       "A 4,200 sq.ft. private residence layered in travertine, oak and brushed brass.",
     featured: true,
@@ -33,8 +32,7 @@ export const projects: Project[] = [
     category: "Commercial",
     year: 2024,
     location: "UB City, Bangalore",
-    image:
-      "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1600&q=80",
+    image: "/featured/img2.png",
     description:
       "A flagship retail atelier composed of fluted walnut, hand-troweled lime plaster and warm uplight.",
   },
@@ -69,8 +67,7 @@ export const projects: Project[] = [
     category: "Turnkey",
     year: 2024,
     location: "Kanakapura Road, Bangalore",
-    image:
-      "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=1600&q=80",
+    image: "/featured/img3.png",
     description:
       "A turnkey villa delivery — from masterplan to last cushion — over 16 months.",
   },

@@ -1,0 +1,195 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-ink: #0B0B0B;
+  --color-ivory: #F5EFE6;
+  --color-champagne: #C8A45D;
+  --color-taupe: #A89582;
+  --color-bone: #EDE5D8;
+}
+
+html {
+  scroll-behavior: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+html, body {
+  background-color: var(--color-ivory);
+  color: var(--color-ink);
+  overflow-x: hidden;
+}
+
+body {
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+::selection {
+  background-color: var(--color-champagne);
+  color: var(--color-ink);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-ivory);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-taupe);
+  border-radius: 0;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-champagne);
+}
+
+/* Type primitives — Inter Tight is the display face.
+   A geometric sans designed for display use, with thin
+   weights that read luxurious at huge sizes. Defaults to
+   light (300) with tight tracking and compressed leading. */
+/* Display stack matches tailwind.config.ts — Helvetica system first, Inter Tight fallback */
+.h-display {
+  font-family: "Helvetica Neue", "Helvetica", "Arial", var(--font-display), system-ui, sans-serif;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 0.95;
+}
+
+.eyebrow {
+  font-family: var(--font-sans), sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.28em;
+  font-size: 0.7rem;
+  font-weight: 500;
+}
+
+/* Lenis smooth scroll */
+html.lenis {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+/* Marquee */
+.marquee-track {
+  display: inline-flex;
+  white-space: nowrap;
+  animation: marquee 60s linear infinite;
+}
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Reveal animation utilities */
+.reveal-text {
+  display: inline-block;
+  overflow: hidden;
+}
+.reveal-text > span {
+  display: inline-block;
+  transform: translateY(110%);
+  transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal-text.in-view > span {
+  transform: translateY(0%);
+}
+
+.reveal-fade {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 1.2s cubic-bezier(0.22, 1, 0.36, 1), transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal-fade.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Image reveal */
+.img-mask {
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 1.6s cubic-bezier(0.65, 0, 0.35, 1);
+}
+.img-mask.in-view {
+  clip-path: inset(0 0% 0 0);
+}
+
+/* Link underline luxe */
+.link-luxe {
+  position: relative;
+  display: inline-block;
+}
+.link-luxe::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  height: 1px;
+  width: 100%;
+  background-color: currentColor;
+  transform-origin: right;
+  transform: scaleX(1);
+  transition: transform 0.7s cubic-bezier(0.65, 0, 0.35, 1);
+}
+.link-luxe:hover::after {
+  transform-origin: left;
+  transform: scaleX(0);
+  animation: link-luxe-in 0.7s cubic-bezier(0.65, 0, 0.35, 1) forwards 0.35s;
+}
+@keyframes link-luxe-in {
+  0% { transform: scaleX(0); transform-origin: left; }
+  100% { transform: scaleX(1); transform-origin: left; }
+}
+
+/* Hairline */
+.hairline {
+  height: 1px;
+  background-color: rgba(11, 11, 11, 0.12);
+}
+.hairline-light {
+  height: 1px;
+  background-color: rgba(245, 239, 230, 0.18);
+}
+
+/* Button reset */
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+/* Form */
+input, textarea, select {
+  font-family: inherit;
+  background: transparent;
+  outline: none;
+}
+input::placeholder, textarea::placeholder {
+  color: rgba(11, 11, 11, 0.4);
+}
+
+/* Page transition curtain */
+.curtain {
+  position: fixed;
+  inset: 0;
+  background-color: var(--color-ink);
+  z-index: 100;
+  transform-origin: bottom;
+  pointer-events: none;
+}

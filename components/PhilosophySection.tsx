@@ -322,25 +322,25 @@ export default function PhilosophySection() {
         1.02
       );
 
-      // ── Beat 4b (1.08 → ~1.45): Stat counters tick up in series. ──
-      STATS.forEach((stat, i) => {
-        const counter = { v: 0 };
-        pinTl.to(
-          counter,
-          {
-            v: stat.value,
-            duration: 0.28,
-            ease: "power2.out",
-            onUpdate: () => {
-              const text =
-                Math.floor(counter.v).toString() + (stat.suffix ?? "");
-              const el = statNumbersRef.current[i];
-              if (el) el.textContent = text;
-            },
-          },
-          1.08 + i * 0.04
+      // ── Beat 4b (1.08 → ~1.90): Stat numbers fade in one-by-one. ──
+      // No counter ticking — the final value is already in the DOM. Slow
+      // stagger (0.22) + longer per-stat duration (0.18) so each number
+      // takes a noticeable amount of scroll to reveal, and the four don't
+      // all flash by in a single wheel tick.
+      STATS.forEach((_, i) => {
+        const el = statNumbersRef.current[i];
+        if (!el) return;
+        pinTl.fromTo(
+          el,
+          { autoAlpha: 0, y: 20 },
+          { autoAlpha: 1, y: 0, duration: 0.18, ease: "power3.out" },
+          1.08 + i * 0.22
         );
       });
+
+      // Buffer beat at end of timeline so the section doesn't unpin
+      // immediately after the last stat lights up.
+      pinTl.to({}, { duration: 0.25 }, 1.92);
 
       // (Description + CTA reveal is part of the pinned timeline above.)
 
@@ -690,7 +690,8 @@ export default function PhilosophySection() {
                     }}
                     className="block font-display font-bold text-ivory text-3xl md:text-4xl lg:text-5xl leading-none mb-1.5 md:mb-2 tracking-[-0.02em]"
                   >
-                    0
+                    {s.value}
+                    {s.suffix ?? ""}
                   </span>
                   <p className="text-[10px] md:text-[11px] tracking-luxe uppercase text-ivory/70 leading-tight">
                     {s.label}

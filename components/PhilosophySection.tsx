@@ -170,10 +170,9 @@ export default function PhilosophySection() {
           end: "+=320%",
           pin: true,
           pinSpacing: true,
-          anticipatePin: 1,
-          // Higher scrub value = more lerp between scroll position and
-          // timeline progress. Smooths jank from fast wheel input and gives
-          // the pinned reveal a softer, more cinematic feel.
+          // anticipatePin removed — with Lenis smooth scroll it caused the
+          // pinned block to snap up and cover the Hero before the scroll
+          // actually reached it. Pin now engages only when top truly hits top.
           scrub: 1.5,
           invalidateOnRefresh: true,
           // Re-anchor growImg's starting position on every refresh (resize,

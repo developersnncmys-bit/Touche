@@ -235,14 +235,27 @@ export default function Footer() {
           </ul>
         </div>
 
-        {/* ── Bottom row — copyright + GST | back to top ── */}
+        {/* ── Bottom row — copyright + GST + dev credit | back to top ── */}
         <div className="pt-6 border-t border-ivory/10 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-          <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-5 text-[12px] text-ivory/45">
-            <p>© {new Date().getFullYear()} | Touché</p>
+          <div className="flex flex-col md:flex-row md:items-center md:flex-wrap gap-2 md:gap-x-5 md:gap-y-2 text-[12px] text-ivory/45">
+            <p>
+              © {new Date().getFullYear()} Touché Interior Design Studio Pvt
+              Ltd. All rights reserved.
+            </p>
             <span aria-hidden="true" className="hidden md:inline text-ivory/20">·</span>
             <p className="tracking-wide">GSTIN — 29ABCDE1234F1Z5</p>
             <span aria-hidden="true" className="hidden md:inline text-ivory/20">·</span>
-            <p>All rights reserved.</p>
+            <p>
+              Developed by{" "}
+              <a
+                href="https://www.nakshatranamahacreations.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-ivory/70 hover:text-champagne transition-colors duration-500 underline-offset-4 hover:underline"
+              >
+                Nakshatra Namaha Creations
+              </a>
+            </p>
           </div>
 
           <a

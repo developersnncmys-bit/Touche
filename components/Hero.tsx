@@ -52,25 +52,33 @@ export default function Hero() {
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top top",
-          end: "+=180%", // ≈ 1.8 viewports of scroll runway while pinned
+          end: "+=200%", // 2 viewports: 1st for Hero alone, 2nd for slide-up
           pin: true,
+          // No pin spacer + a 100vh sibling spacer below Hero (see JSX). The
+          // spacer pushes PhilosophySection's natural position to scroll
+          // 200vh, so it CANNOT enter the viewport until scroll 100vh — that
+          // means the entire first viewport of scroll belongs to Hero alone
+          // for its carousel, and PhilosophySection slides up over Hero only
+          // during the second viewport of scroll.
+          pinSpacing: false,
           scrub: 1,
           anticipatePin: 1,
           invalidateOnRefresh: true,
         },
       });
 
-      // Timeline beats (units are arbitrary, totals to 1):
-      //   0    → 0.40  image 1 holds
-      //   0.40 → 0.55  carousel pans to image 2
-      //   0.55 → 1.00  image 2 holds (then pin releases into next section)
-      tl.to({}, { duration: 0.4 }); // image 1 dwell
+      // Timeline beats (timeline 0→1 maps to scroll 0→200vh):
+      //   0    → 0.20  image 1 holds          (0   → 40vh)
+      //   0.20 → 0.25  carousel pans to img 2 (40  → 50vh)
+      //   0.25 → 0.50  image 2 holds ALONE    (50  → 100vh)  ← FIRST viewport, Hero alone
+      //   0.50 → 1.00  image 2 stays as PhilosophySection slides up (100 → 200vh)
+      tl.to({}, { duration: 0.2 }); // image 1 dwell
       tl.to(
         trackRef.current,
-        { xPercent: -50, ease: "power1.inOut", duration: 0.15 },
-        0.4
+        { xPercent: -50, ease: "power1.inOut", duration: 0.05 },
+        0.2
       );
-      tl.to({}, { duration: 0.45 }, 0.55); // image 2 dwell
+      tl.to({}, { duration: 0.75 }, 0.25); // image 2 dwell (alone, then with slide-up)
 
       // Fade out the centered headline + subtitle right before the swap
       gsap.to(textRef.current, {
@@ -105,6 +113,7 @@ export default function Hero() {
   }, [menuOpen]);
 
   return (
+    <>
     <section
       ref={sectionRef}
       className="relative w-full h-screen overflow-hidden bg-espresso"
@@ -362,5 +371,11 @@ export default function Hero() {
         )}
       </AnimatePresence>
     </section>
+    {/* Spacer — pushes the next section's natural position to scroll 200vh,
+        so the first viewport of scroll belongs to Hero alone (carousel
+        completes here), and the next section slides up over Hero during
+        the second viewport of scroll. */}
+    <div aria-hidden="true" className="h-screen w-full pointer-events-none" />
+    </>
   );
 }
